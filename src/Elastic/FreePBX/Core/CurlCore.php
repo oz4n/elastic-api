@@ -3,13 +3,15 @@
 namespace Elastic\FreePBX\Core;
 
 use Elastic\FreePBX\Utils\UserAgents;
+use Elastic\FreePBX\Form\LoginForm;
+use Curl\Curl;
 
 /**
  * Description of CurlInit
  *
  * @author nunenuh
  */
-class Core {
+class CurlCore {
 
     private $curl;
 
@@ -20,7 +22,7 @@ class Core {
 
     private function initConfig($curl) {
         $cookiefile = tempnam("/tmp", "cookies");
-        $curl->setUserAgent(UserAgents::Mozilla);
+        $curl->setUserAgent(UserAgents::Chrome);
         $curl->setOpt(CURLOPT_HEADER, 0);
         $curl->setopt(CURLOPT_RETURNTRANSFER, TRUE);
         $curl->setopt(CURLOPT_FOLLOWLOCATION, TRUE);
@@ -29,6 +31,14 @@ class Core {
         $curl->setopt(CURLOPT_COOKIEFILE, $cookiefile);
         $curl->setopt(CURLOPT_COOKIEJAR, $cookiefile);
         return $curl;
+    }
+
+    /**
+     * 
+     * @return Curl
+     */
+    public function getCurl() {
+        return $this->curl;
     }
 
 }
