@@ -21,7 +21,6 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "curl/curl": "dev-master",
         "sunra/php-simple-html-dom-parser": "dev-master"
     }
 }
