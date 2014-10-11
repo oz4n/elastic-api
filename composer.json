@@ -1,5 +1,5 @@
 {
-    "name": "nunenuh/elastic-api",
+    "name": "oz4n/elastic-api",
     "description": "Elastic PHP Library for access Elastic FreePBX via Curl",
     "version": "0.1.0",
     "type": "library",
