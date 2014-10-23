@@ -10,7 +10,8 @@ use Elastic\FreePBX\Entity\Login;
  *
  * @author nunenuh
  */
-class SIPTrunkForm {
+class SIPTrunkForm
+{
 
     /**
      *
@@ -24,44 +25,71 @@ class SIPTrunkForm {
      */
     private $login;
 
-    public function getEntity() {
+    public function getEntity()
+    {
         return $this->entity;
     }
 
-    public function getLogin() {
+    public function getLogin()
+    {
         return $this->login;
     }
 
-    public function setEntity(SIPTrunk $entity) {
+    public function setEntity(SIPTrunk $entity)
+    {
         $this->entity = $entity;
     }
 
-    public function setLogin(Login $login) {
+    public function setLogin(Login $login)
+    {
         $this->login = $login;
     }
 
-    public function getData() {
+    public function getData()
+    {
         return $this->entity->getArrayPost();
     }
 
-    public function getSelectURL() {
+    public function getSelectURL()
+    {
         $URL = "https://" . $this->login->ipaddr . "/config.php"
                 . "?type=setup&display=trunks";
         return $URL;
     }
 
-    public function getSIPSelectURL() {
+    public function getSIPSelectURL()
+    {
         $URL = "https://" . $this->login->ipaddr . "/config.php"
                 . "?display=trunks&tech=SIP";
         return $URL;
     }
 
-    public function getAddOrUpdateURL() {
+    public function getAddURL()
+    {
         $URL = "https://" . $this->login->ipaddr . "/config.php";
         return $URL;
     }
 
-    public function getDelURL() {
+    public function getListAllURL()
+    {
+        $URL = "https://" . $this->login->ipaddr . "/config.php?display=trunks";
+        return $URL;
+    }
+
+    public function getListURL()
+    {
+        $URL = "https://" . $this->login->ipaddr . "/config.php?display=trunks&extdisplay=" . $this->entity->extDisplay;
+        return $URL;
+    }
+
+    public function getUpdateURL()
+    {
+        $URL = "https://" . $this->login->ipaddr . "/config.php";
+        return $URL;
+    }
+
+    public function getDelURL()
+    {
         $URL = "https://" . $this->login->ipaddr . "/config.php"
                 . "?display=trunks"
                 . "&extdisplay=" . $this->entity->extDisplay

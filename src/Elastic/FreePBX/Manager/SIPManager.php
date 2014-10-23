@@ -72,9 +72,9 @@ class SIPManager {
         $this->initLogin();
         //execute get for getting list extension
         $u2 = $sf->getAddURL();
-        $this->curl->get($u2);
-
-        $ao = ParserSIP::getListObject($this->curl->response);
+        
+        $this->curl->get($u2);        
+        $ao = ParserSIP::getListObject($this->curl->response);     
         return $ao;
     }
 
@@ -96,7 +96,7 @@ class SIPManager {
         $d1 = $sf->getSIPData();
         $u1 = $sf->getUpdateURL();
         $this->curl->get($u1, $d1);
-
+       
         $sip = ParserSIP::getSIP($this->curl->response);
         return $sip;
     }
@@ -164,6 +164,7 @@ class SIPManager {
 
         //execution for update sip extension
         $d1 = $sf->getSIPData();
+        
         $u1 = $sf->getUpdateURL();
         $this->curl->post($u1, $d1);
     }

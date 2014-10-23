@@ -15,7 +15,8 @@ class Trunk {
     var $peerUsername;
     var $peerPassword;
     var $peerHost;
-
+    var $extdisplay;
+    
     public function getTrunkName() {
         return $this->trunkName;
     }

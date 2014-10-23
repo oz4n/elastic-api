@@ -12,6 +12,7 @@ use Elastic\FreePBX\Entity\SIPTrunkUserDetails;
 use Elastic\FreePBX\Form\SIPTrunkForm;
 use Elastic\FreePBX\Entity\Login;
 use Elastic\FreePBX\Form\LoginForm;
+use Elastic\FreePBX\Parser\ParserSIPTrunk;
 
 /**
  * Description of TrunkManager
@@ -71,7 +72,16 @@ class SIPTrunkManager
 
     public function listAll()
     {
-        
+        $st = new SIPTrunk();
+        $stf = new SIPTrunkForm();
+        $stf->setEntity($st);
+        $stf->setLogin($this->login);
+
+        $this->initLogin();
+        $u2 = $stf->getListAllURL();
+
+        $this->curl->get($u2);
+        return ParserSIPTrunk::getListObject($this->curl->response, $this->login);
     }
 
     public function find($id)
@@ -175,24 +185,26 @@ class SIPTrunkManager
     {
         $st = new SIPTrunk();
         $st->display = 'extensions';
-        $st->action = "deltrunk";       
+        $st->action = "deltrunk";
         $st->extDisplay = $id;
-        
-        $pd = new SIPTrunkPeerDetails();     
+
+        $pd = new SIPTrunkPeerDetails();
         $st->setPeerDetails($pd);
 
-        $rs = new RegisterString();       
+        $rs = new RegisterString();
         $st->setRegisterString($rs);
 
-        $stf = new SIPTrunkForm();        
+        $stf = new SIPTrunkForm();
         $stf->setEntity($st);
         $stf->setLogin($this->login);
-        
+
         $this->initLogin();
-        
+
         $dadd = $stf->getData();
         $uadd = $stf->getDelURL();
         $this->curl->get($uadd, $dadd);
     }
+
+    
 
 }
