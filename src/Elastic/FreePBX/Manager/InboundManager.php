@@ -7,6 +7,7 @@ use Elastic\FreePBX\Form\LoginForm;
 use Elastic\FreePBX\Manager\Entity\Inbound;
 use Elastic\FreePBX\Entity\InboundRoute;
 use Elastic\FreePBX\Form\InboundForm;
+use Elastic\FreePBX\Parser\ParserInbound;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -77,13 +78,13 @@ class InboundManager
         $r->description = $route->description;
         $r->didnumber = $route->didnumber;
         $r->destination = $route->destination;
-        
+
         $f = new InboundForm();
         $f->setEntity($r);
         $f->setLogin($this->login);
-        
+
         $this->initLogin();
-        
+
         $d = $f->getData();
         $u = $f->getAddUrl();
         return $this->curl->post($u, $d);
@@ -97,13 +98,13 @@ class InboundManager
         $r->didnumber = $route->didnumber;
         $r->destination = $route->destination;
         $r->extdisplay = $route->extdisplay;
-        
+
         $f = new InboundForm();
         $f->setEntity($r);
         $f->setLogin($this->login);
-        
+
         $this->initLogin();
-        
+
         $d = $f->getData();
         $u = $f->getUpdateUrl();
         return $this->curl->post($u, $d);
@@ -123,14 +124,47 @@ class InboundManager
         return $this->curl->get($u, $d);
     }
 
-    public function find()
+    public function find($id)
     {
+        $r = new InboundRoute();
+        $r->action = 'edtIncoming';
+        $r->extdisplay = $id;
         
+        $f = new InboundForm();
+        $f->setEntity($r);
+        $f->setLogin($this->login);
+
+        $this->initLogin();
+        
+        $u = $f->getListUrl();
+        $this->curl->get($u);
+        return ParserInbound::getInbound($this->curl->response);
     }
 
     public function listAll()
     {
-        
+        $r = new InboundRoute();
+        $f = new InboundForm();
+        $f->setEntity($r);
+        $f->setLogin($this->login);
+        $this->initLogin();
+
+        $u = $f->getListAllUrl();
+        $this->curl->get($u);
+        return ParserInbound::getListObject($this->curl->response);
+    }
+
+    public function findAllExtension()
+    {
+        $r = new InboundRoute();
+        $f = new InboundForm();
+        $f->setEntity($r);
+        $f->setLogin($this->login);
+        $this->initLogin();
+
+        $u = $f->getListAllUrl();
+        $this->curl->get($u);
+        return ParserInbound::getExtension($this->curl->response);
     }
 
 }
